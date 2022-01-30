@@ -3,32 +3,34 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
-
+import { GlobeComponent } from './globe/globe.component';
+import { InterfaceComponent } from './interface/interface.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-    CounterComponent,
-    FetchDataComponent
-  ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+  imports: [BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+  MatCheckboxModule,
+  MatSliderModule,
+  MatFormFieldModule,
+  MatDatepickerModule,
+  MatButtonModule,
+  MatIconModule,
+  HttpClientModule,
+  FormsModule,
+  RouterModule.forRoot([
+      { path: '', component: AppComponent, pathMatch: 'full' }
     ])
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    GlobeComponent,
+    InterfaceComponent
+  ],
+  bootstrap: [AppComponent, GlobeComponent, InterfaceComponent]
 })
 export class AppModule { }
