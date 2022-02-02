@@ -30,4 +30,7 @@ export class AppComponent {
       }, error => console.error(error)); // TODO Manage error {Snackbar}
     }
   }
+  public sendToBack(event){
+    console.log("EVENT",event);
+  }
 }
