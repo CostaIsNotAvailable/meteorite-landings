@@ -1,28 +1,43 @@
 import { Continents } from './../enum/continents';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { MatSliderChange } from '@angular/material/slider';
+import { ThemePalette } from '@angular/material/core';
 
 export interface Task {
   name: string;
   completed: boolean;
-  color: string;
+  color: ThemePalette;
   subtasks?: Task[];
 }
 
 @Component({
   selector: 'app-interface',
   templateUrl: './interface.component.html',
-  styleUrls: ['./interface.component.scss'],
+  styleUrls: ['./interface.component.scss']
 })
 export class InterfaceComponent implements OnInit {
+  
   @Output() sendData = new EventEmitter();
+  
+  task: Task = {
+    name: 'Continents',
+    completed: false,
+    color: 'primary',
+    subtasks: [],
+  };
+
   sliderValue = 0;
+
   ngOnInit(): void {
-      const continents = Object.values(Continents).map((value) => ({name: value, completed: false, color: "warn"}));
+      const continents = Object.values(Continents)
+        .map((value) => ({ name: value, completed: false, color: "warn" } as Task));
       this.task.subtasks = continents;
   }
 
-  public setFileInput(file: File){
-    console.log(file);
+  setFileInput(event: Event){
+    const input = event.target as HTMLInputElement;
+    const files = input.files;
+    console.log(files);
   }
 
   formatLabel(value: number) {
@@ -36,16 +51,9 @@ export class InterfaceComponent implements OnInit {
     return value;
   }
 
-  setSliderValue(event: Event){
-    this.sliderValue = event['value'];
+  setSliderValue(event: MatSliderChange){
+    this.sliderValue = event.value || 0;
   }
-
-  task: Task = {
-    name: 'Continents',
-    completed: false,
-    color: 'primary',
-    subtasks: [],
-  };
 
   allComplete: boolean = false;
   updateAllComplete() {
@@ -69,12 +77,10 @@ export class InterfaceComponent implements OnInit {
   }
 
   emitData(){
-    let test = "test";
-    let test2 = {
+    console.log("EMIT");
+    this.sendData.emit({
       checkbox: this.task,
       slider: this.sliderValue
-    };
-    console.log("EMIT");
-    this.sendData.emit(test2);
+    });
   }
 }

@@ -1,7 +1,7 @@
 <body style="padding-left: 30px;">
   <div class="row" style="padding-top: 20px;">
     <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
-    <input hidden (change)="setFileInput($event.target.files)" #fileInput type="file" id="file">
+    <input hidden (change)="setFileInput($event)" #fileInput type="file" id="file">
   </div>
   <div class="row">
     <mat-slider
@@ -29,7 +29,8 @@
       <span>
         <ul>
           <li *ngFor="let subtask of task.subtasks">
-            <mat-checkbox [(ngModel)]="subtask.completed"
+            <mat-checkbox [checked]="subtask.completed"
+                          (change)="subtask.completed = $event.checked"
                           [color]="subtask.color"
                           (ngModelChange)="updateAllComplete()">
               {{subtask.name}}

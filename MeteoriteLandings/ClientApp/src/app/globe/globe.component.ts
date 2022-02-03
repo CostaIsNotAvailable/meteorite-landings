@@ -1,20 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import threeGlobe from 'three-globe';
+import ThreeGlobe from 'three-globe';
 import * as THREE from 'three';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js';
+import { Material } from 'three';
+
+interface ExtendedGlobeMaterial {
+  bumpScale: number;
+  specularMap: THREE.Texture;
+  specular: THREE.Color;
+  shininess: number;
+}
 
 @Component({
   selector: 'app-globe',
-  templateUrl: './globe.component.html'
+  templateUrl: './globe.component.html',
+  styleUrls: ['./globe.component.scss']
 })
 export class GlobeComponent implements OnInit {
+
   ngOnInit(): void {
-    const Globe = new threeGlobe()
+    const Globe = new ThreeGlobe()
       .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
       .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png');
 
     // Global Material
-    const globeMaterial = Globe.globeMaterial();
+    const globeMaterial = (Globe.globeMaterial() as Material & ExtendedGlobeMaterial);
     globeMaterial.bumpScale = 10;
     new THREE.TextureLoader().load('//unpkg.com/three-globe/example/img/earth-water.png', texture => {
       globeMaterial.specularMap = texture;
@@ -27,8 +37,12 @@ export class GlobeComponent implements OnInit {
 
     // Render
     const render = new THREE.WebGLRenderer();
-    render.setSize(1400, window.innerHeight*98.5/100);
-    document.getElementById('globeViz').appendChild(render.domElement);
+    //render.setSize(1400, window.innerHeight*98.5/100);
+    render.setSize(window.innerWidth, window.innerHeight);
+    const globeViz = document.getElementById('globeViz');
+    if (globeViz) {
+      globeViz.appendChild(render.domElement);
+    }
 
     // Scene
     const scene = new THREE.Scene();
@@ -54,4 +68,5 @@ export class GlobeComponent implements OnInit {
       requestAnimationFrame(animate);
     })();
   }
+
 }
