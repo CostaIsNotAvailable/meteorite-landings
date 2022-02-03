@@ -1,0 +1,13 @@
+diff --git a/node_modules/three-globe/dist/three-globe.d.ts b/node_modules/three-globe/dist/three-globe.d.ts
+index bbc63fa..e1a5799 100644
+--- a/node_modules/three-globe/dist/three-globe.d.ts
++++ b/node_modules/three-globe/dist/three-globe.d.ts
+@@ -38,7 +38,7 @@ declare class ThreeGlobeGeneric<ChainableInstance> extends Object3D {
+   atmosphereAltitude(): number;
+   atmosphereAltitude(alt: number): ChainableInstance;
+   globeMaterial(): Material;
+-  globeMaterial(globeMaterial): ChainableInstance;
++  globeMaterial(globeMaterial: Material): ChainableInstance;
+   onGlobeReady(callback: (() => void)): ChainableInstance;
+ 
+   // Points layer
