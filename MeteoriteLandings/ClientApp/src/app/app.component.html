@@ -2,7 +2,7 @@
   <div class="container" style="background-color: black;">
     <div fxFill="row" fxLayoutAlign="center center" >
       <app-interface (sendData)="sendToBack($event)"></app-interface>
-      <app-globe></app-globe>
+      <app-globe [displayData]="displayData"></app-globe>
     </div>
   </div>
 </body>
