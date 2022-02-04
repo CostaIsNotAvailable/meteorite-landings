@@ -26,7 +26,7 @@ export class AppComponent {
   public async handleFileInput(file: File) {
     try {
       if (file.type != ('application/json' || 'application/yaml') && file) {
-        console.log('ERROR TYPE'); // TODO Manage error {Snackbar}
+        window.alert('The file type is invalid'); // TODO: Manage error with Snackbar {throw Error}
       } else {
         console.log(file);
 
