@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MeteoriteLanding } from 'src/app/model/data.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Params } from './model/params.model';
 
@@ -31,10 +31,13 @@ export class AppComponent {
         console.log(file);
 
         const requestBody = new FormData();
-        requestBody.append('', file, file.name);
+        requestBody.append('', file, file.name); // TODO Add params
+        const requestParams = new HttpParams()
+          .append('mass', this.params.mass)
+          .append('continents', JSON.stringify(this.params.continents));
 
         const request = await this.client
-          .post<MeteoriteLanding[]>(this.baseUrl + '/meteoritelandings', requestBody)
+          .post<MeteoriteLanding[]>(this.baseUrl + '/meteoritelandings', requestBody, { params: requestParams})
           .toPromise();
 
           console.log(request);
@@ -46,6 +49,8 @@ export class AppComponent {
 
   public sendToBack(params: Params) {
     console.log('EMIT PARAMS', params);
-      this.handleFileInput(params.file);
+    this.params.continents = params.continents;
+    this.params.mass = params.mass;
+    this.handleFileInput(params.file);
   }
 }
