@@ -56,8 +56,8 @@ export class GlobeComponent implements OnInit {
             lat: item.recLat,
             lng: item.recLong,
             labelColor: 'white',
-            size: 0.1,
-            text: item.name // TODO => onHover labelDot => See the name
+            size: 0.15,
+            text: item.name + ' - ' + item.year.substring(0,4) // TODO => onHover labelDot => See the informations
           }
         );
         const maxR = Math.min(Math.random()*item.mass,maxPropagation);
