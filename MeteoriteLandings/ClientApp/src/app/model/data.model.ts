@@ -1,4 +1,4 @@
-export class Data {
+export class MeteoriteLanding {
   name!: string;
   mass!: number;
   year!: string;

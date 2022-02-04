@@ -2,6 +2,7 @@ import { Continents } from './../enum/continents';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
 import { ThemePalette } from '@angular/material/core';
+import { Params } from '../model/params.model';
 
 export interface Task {
   name: string;
@@ -26,6 +27,9 @@ export class InterfaceComponent implements OnInit {
     subtasks: [],
   };
 
+  fileName?: string;
+  file?: File;
+
   sliderValue = 0;
 
   ngOnInit(): void {
@@ -34,10 +38,13 @@ export class InterfaceComponent implements OnInit {
       this.task.subtasks = continents;
   }
 
-  setFileInput(event: Event){
+  setFileInput(event: Event) {
     const input = event.target as HTMLInputElement;
     const files = input.files;
-    console.log(files);
+    if(files){
+      this.fileName = files[0].name;
+      this.file = files[0];
+    }
   }
 
   formatLabel(value: number) {
@@ -51,7 +58,7 @@ export class InterfaceComponent implements OnInit {
     return value;
   }
 
-  setSliderValue(event: MatSliderChange){
+  setSliderValue(event: MatSliderChange) {
     this.sliderValue = event.value || 0;
   }
 
@@ -68,7 +75,6 @@ export class InterfaceComponent implements OnInit {
   }
 
   setAll(completed: boolean) {
-    this.emitData();
     this.allComplete = completed;
     if (this.task.subtasks == null) {
       return;
@@ -76,11 +82,30 @@ export class InterfaceComponent implements OnInit {
     this.task.subtasks.forEach(t => (t.completed = completed));
   }
 
-  emitData(){
-    console.log("EMIT");
-    this.sendData.emit({
-      checkbox: this.task,
-      slider: this.sliderValue
+  getEnableCheckbox() {
+    if(!this.task.subtasks){
+      return [];
+    }
+    
+    let subtasks: string[] = [];
+    this.task.subtasks.forEach(subtask => {
+      if(subtask.completed){
+        subtasks.push(subtask.name);
+      }
     });
+    return subtasks;
+  }
+
+  emitData() {
+    if(!this.file){
+      return;
+    }
+    const continents = this.getEnableCheckbox();
+    const params: Params = {
+      continents: continents,
+      mass: this.sliderValue,
+      file: this.file
+    }
+    this.sendData.emit(params);
   }
 }

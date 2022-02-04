@@ -37,8 +37,7 @@ export class GlobeComponent implements OnInit {
 
     // Render
     const render = new THREE.WebGLRenderer();
-    //render.setSize(1400, window.innerHeight*98.5/100);
-    render.setSize(window.innerWidth, window.innerHeight);
+    render.setSize(window.innerWidth/1.101, window.innerHeight);
     const globeViz = document.getElementById('globeViz');
     if (globeViz) {
       globeViz.appendChild(render.domElement);

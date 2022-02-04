@@ -1,38 +1,51 @@
-import { Component, Inject } from '@angular/core';
-import { Data } from 'src/app/model/data.model';
-import { HttpClient } from '@angular/common/http'
+import { Component } from '@angular/core';
+import { MeteoriteLanding } from 'src/app/model/data.model';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Params } from './model/params.model';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   client: HttpClient;
   baseUrl = environment.BASE_URL;
+  params: { continents: string[]; mass: number } = {
+    continents: [],
+    mass: 0,
+  };
+
   //displayData: Data;
-  constructor(http: HttpClient){
+  constructor(http: HttpClient) {
     this.client = http;
   }
-  fileToUpload: File | null = null;
-  public handlerFileInput(file: File) {
-    this.fileToUpload = file;
-    if (this.fileToUpload.type != ('application/json' || 'application/yaml') && this.fileToUpload) {
-      console.log("ERROR TYPE") // TODO Manage error {Snackbar}
-    } else {
-      console.log(this.fileToUpload);
-      let postData = {
-        params: {},
-        file: "FILE TO IMPORT"
+
+  public async handleFileInput(file: File) {
+    try {
+      if (file.type != ('application/json' || 'application/yaml') && file) {
+        console.log('ERROR TYPE'); // TODO Manage error {Snackbar}
+      } else {
+        console.log(file);
+
+        const requestBody = new FormData();
+        requestBody.append('', file, file.name);
+
+        const request = await this.client
+          .post<MeteoriteLanding[]>(this.baseUrl + '/meteoritelandings', requestBody)
+          .toPromise();
+
+          console.log(request);
       }
-      this.client.post<Data>(this.baseUrl+'/meteoritelandings', {postData}).subscribe(result => {
-        console.log(result)
-        //this.displayData = result;
-      }, error => console.error(error)); // TODO Manage error {Snackbar}
+    } catch (e) {
+      console.log((e as Error).message);
     }
   }
-  public sendToBack(event: Event){
-    console.log("EVENT",event);
+
+  public sendToBack(params: Params) {
+    console.log('EMIT PARAMS', params);
+      this.handleFileInput(params.file);
   }
 }

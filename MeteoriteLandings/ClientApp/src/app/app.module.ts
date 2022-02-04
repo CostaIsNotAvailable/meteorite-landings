@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatDatepickerModule,
     MatButtonModule,
     MatIconModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    FlexLayoutModule
   ],
   providers: [MatNativeDateModule],
   bootstrap: [AppComponent]

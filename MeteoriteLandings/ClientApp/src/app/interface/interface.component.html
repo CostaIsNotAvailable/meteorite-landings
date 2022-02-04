@@ -1,9 +1,12 @@
-<body style="padding-left: 30px;">
-  <div class="row" style="padding-top: 20px;">
+<body style="padding-left: 20px; margin-right: 25px;">
+  <div style="padding-bottom: 10px;"> 
     <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
     <input hidden (change)="setFileInput($event)" #fileInput type="file" id="file">
   </div>
-  <div class="row">
+  <div>
+    <a style="color: white;">{{fileName}}</a>
+  </div>
+  <div>
     <mat-slider
       thumbLabel
       [displayWith]="formatLabel"
@@ -12,18 +15,20 @@
       min="0"
       max="100000000"
       aria-label="units"
+      color="warn"
       (input)="setSliderValue($event)">
     </mat-slider>
   </div>
-  <div class="row">
+  <div>
     <section>
       <span>
         <mat-checkbox class="example-margin"
                       [checked]="allComplete"
                       [color]="task.color"
                       [indeterminate]="someComplete()"
-                      (change)="setAll($event.checked)">
-          {{task.name}}
+                      (change)="setAll($event.checked)"
+                      style="color: red;">
+          <a style="color: white;">{{task.name}}</a>
         </mat-checkbox>
       </span>
       <span>
@@ -33,14 +38,14 @@
                           (change)="subtask.completed = $event.checked"
                           [color]="subtask.color"
                           (ngModelChange)="updateAllComplete()">
-              {{subtask.name}}
+              <a style="color: white;">{{subtask.name}}</a>
             </mat-checkbox>
           </li>
         </ul>
       </span>
     </section>
   </div>
-  <div class="row">
+  <div>
     <button mat-raised-button (click)="emitData()">Display Data</button>
   </div>
 </body>
