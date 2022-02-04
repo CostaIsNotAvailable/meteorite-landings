@@ -7,6 +7,7 @@
     <a style="color: white;">{{fileName}}</a>
   </div>
   <div>
+    <!-- TODO: Update slider to select a range of weight -->
     <mat-slider
       thumbLabel
       [displayWith]="formatLabel"
@@ -19,6 +20,7 @@
       (input)="setSliderValue($event)">
     </mat-slider>
   </div>
+  <!-- TODO: Add date filter (minimum year, maximum year) -->
   <div>
     <section>
       <span>
@@ -46,6 +48,8 @@
     </section>
   </div>
   <div>
-    <button mat-raised-button (click)="emitData()">Display Data</button>
+    <button mat-raised-button (click)="emitData()">Launch</button>
+    <!-- TODO: Disable when animation is working -->
   </div>
+  <!-- TODO: Add button to cancel animation and see Dot of crash directly (+enable Launch Button) -->
 </body>
