@@ -1,6 +1,7 @@
 export enum Continents {
   Africa = "Africa",
-  America = "America",
+  NorthAmerica = "NA",
+  SouthAmerica = "SA",
   Antartic = "Antartic",
   Asia = "Asia",
   Europe = "Europe",
