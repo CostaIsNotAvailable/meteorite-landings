@@ -13,12 +13,12 @@ import { Params } from './model/params.model';
 export class AppComponent {
   client: HttpClient;
   baseUrl = environment.BASE_URL;
+  displayData: MeteoriteLanding[] = [];
   params: { continents: string[]; mass: number } = {
     continents: [],
     mass: 0,
   };
 
-  //displayData: Data;
   constructor(http: HttpClient) {
     this.client = http;
   }
@@ -31,7 +31,7 @@ export class AppComponent {
         console.log(file);
 
         const requestBody = new FormData();
-        requestBody.append('', file, file.name); // TODO Add params
+        requestBody.append('', file, file.name);
         const requestParams = new HttpParams()
           .append('mass', this.params.mass)
           .append('continents', JSON.stringify(this.params.continents));
@@ -39,8 +39,9 @@ export class AppComponent {
         const request = await this.client
           .post<MeteoriteLanding[]>(this.baseUrl + '/meteoritelandings', requestBody, { params: requestParams})
           .toPromise();
-
-          console.log(request);
+          if(request){
+            this.displayData = request
+          }
       }
     } catch (e) {
       console.log((e as Error).message);
