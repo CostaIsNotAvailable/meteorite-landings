@@ -21,12 +21,19 @@ export class AppComponent {
     maxMass: number;
     minDate: number;
     maxDate: number;
+    isSorted: boolean;
+    sortedBy: 'Date' | 'Mass';
+    order: 'Ascending' | 'Descending';
+
   } = {
     continents: [],
     minMass: 0,
     maxMass: 100000000,
     minDate: 1400,
     maxDate: 2013,
+    isSorted: false,
+    sortedBy: 'Mass',
+    order: 'Ascending'
   };
   actionSnackBar = 'Close';
   optionsSnackBar!: MatSnackBarConfig;
@@ -57,6 +64,9 @@ export class AppComponent {
           .append('maxMass', this.params.maxMass)
           .append('minDate', this.params.minDate)
           .append('maxDate', this.params.maxDate)
+          .append('isSorted', this.params.isSorted)
+          .append('sortedBy', this.params.sortedBy)
+          .append('order', this.params.order)
           .append('continents', JSON.stringify(this.params.continents));
 
         const request = await this.client
@@ -85,6 +95,9 @@ export class AppComponent {
     this.params.maxMass = params.maxMass;
     this.params.minDate = params.minDate;
     this.params.maxDate = params.maxDate;
+    this.params.isSorted = params.isSorted;
+    this.params.sortedBy = params.sortedBy;
+    this.params.order = params.order;
     this.handleFileInput(params.file);
   }
 

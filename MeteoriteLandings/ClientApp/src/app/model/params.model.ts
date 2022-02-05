@@ -4,5 +4,8 @@ export class Params {
   maxMass!: number;
   minDate!: number;
   maxDate!: number;
+  isSorted!: boolean;
+  sortedBy!: 'Date' | 'Mass';
+  order!: 'Ascending' | 'Descending';
   file!: File;
 }

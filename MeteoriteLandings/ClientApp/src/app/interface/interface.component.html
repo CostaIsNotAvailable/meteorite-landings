@@ -8,6 +8,7 @@
       <a class="txtFileName">File name : {{fileName}}</a>
     </div>
   </div>
+  <mat-divider></mat-divider>
   <div class="sliders">
     <div class="minMassTxt">
       <a class="txtMinMass">Min Mass (g) :</a>
@@ -32,6 +33,7 @@
       </mat-slider>
     </div>
   </div>
+  <mat-divider></mat-divider>
   <div class="datePicker">
     <div class="minDate">
       <a class="txtMinYear">Min Year : </a>
@@ -44,6 +46,7 @@
         (change)="setMaximumDate(maxDate)">
     </div>
   </div>
+  <mat-divider></mat-divider>
   <div class="checkbox">
     <section>
       <span class="globalCheckbox">
@@ -64,6 +67,23 @@
       </span>
     </section>
   </div>
+  <mat-divider></mat-divider>
+  <div class="orderBy">
+    <div class="isOrder">
+      <button mat-raised-button (click)="changeIsSortedValue()">Order Data</button>
+    </div>
+    <div class="orderField">
+      <mat-slide-toggle color="primary" (change)="setOrderField()" [disabled]="!isSorted ? 'disabled': null">
+        <a class="orderFieldTxt">{{orderField}}</a>
+      </mat-slide-toggle>
+    </div>
+    <div class="orderType">
+      <mat-slide-toggle color="primary" (change)="setOrderType()" [disabled]="!isSorted ? 'disabled': null">
+        <a class="orderTypeTxt">{{orderType}}</a>
+      </mat-slide-toggle>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
   <div class="buttons">
     <div class="launch">
       <button mat-raised-button (click)="emitData()" [disabled]="!launch ? 'disabled': null">Launch</button>
