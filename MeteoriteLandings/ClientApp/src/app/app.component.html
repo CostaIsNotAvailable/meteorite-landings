@@ -1,8 +1,8 @@
 <body>
-  <div class="container" style="background-color: black;">
-    <div fxFill="row" fxLayoutAlign="center center" >
-      <app-interface (sendData)="sendToBack($event)"></app-interface>
-      <app-globe [displayData]="displayData"></app-globe>
+  <div class="container">
+    <div fxFill="row" fxLayoutAlign="center center">
+      <app-interface (sendData)="sendToBack($event)" (cancelEvent)="cancelEvent($event)"></app-interface>
+      <app-globe [displayData]="displayData" [isCanceled]="isCanceled"></app-globe>
     </div>
   </div>
 </body>
