@@ -15,14 +15,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    InterfaceComponent,
-    GlobeComponent
-  ],
-  imports: [ HttpClientModule,
+  declarations: [AppComponent, InterfaceComponent, GlobeComponent],
+  imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -33,9 +33,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatButtonModule,
     MatIconModule,
     MatNativeDateModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatSnackBarModule,
+    MatInputModule,
+    FormsModule,
   ],
   providers: [MatNativeDateModule],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
