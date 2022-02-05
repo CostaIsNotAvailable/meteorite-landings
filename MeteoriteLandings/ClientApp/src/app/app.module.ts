@@ -18,6 +18,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [AppComponent, InterfaceComponent, GlobeComponent],
@@ -37,6 +39,8 @@ import { FormsModule } from '@angular/forms';
     MatSnackBarModule,
     MatInputModule,
     FormsModule,
+    MatSlideToggleModule,
+    MatDividerModule
   ],
   providers: [MatNativeDateModule],
   bootstrap: [AppComponent],
