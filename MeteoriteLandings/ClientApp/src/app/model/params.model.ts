@@ -1,5 +1,8 @@
 export class Params {
   continents!: string[];
-  mass!: number;
+  minMass!: number;
+  maxMass!: number;
+  minDate!: number;
+  maxDate!: number;
   file!: File;
 }
