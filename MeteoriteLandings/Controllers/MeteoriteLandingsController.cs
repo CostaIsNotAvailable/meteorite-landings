@@ -11,7 +11,7 @@ using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using MeteoriteLandings.Models;
 using MeteoriteLandings.Enums;
-
+using MeteoriteLandings.Services;
 
 namespace MeteoriteLandings.Controllers
 {
@@ -71,18 +71,10 @@ namespace MeteoriteLandings.Controllers
 
                 if (isSorted)
                 {
-                    meteoriteLandings = meteoriteLandings.OrderBy(m =>
-                    {
-                        switch (sortedBy)
-                        {
-                            case (SortBy.Date):
-                                return m.Year.Year;
-                            case (SortBy.Mass):
-                                return m.Mass;
-                            default:
-                                return m.Id;
-                        }
-                    }).ToList();
+                    meteoriteLandings = meteoriteLandings
+                        .AsQueryable()
+                        .OrderByWithDirection(m => Sort(m, sortedBy), order)
+                        .ToList();
                 }
 
                 return Ok(meteoriteLandings);
@@ -90,6 +82,19 @@ namespace MeteoriteLandings.Controllers
             catch (Exception e)
             {
                 return Problem(title: e.Message , detail: e.ToString());
+            }
+        }
+
+        private double Sort(MeteoriteLanding meteroriteLanding, SortBy sortedBy)
+        {
+            switch (sortedBy)
+            {
+                case (SortBy.Date):
+                    return meteroriteLanding.Year.Year;
+                case (SortBy.Mass):
+                    return meteroriteLanding.Mass;
+                default:
+                    return meteroriteLanding.Id;
             }
         }
 

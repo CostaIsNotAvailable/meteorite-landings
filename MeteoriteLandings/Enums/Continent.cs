@@ -3,8 +3,8 @@ namespace MeteoriteLandings.Enums
     public enum Continent
     {
         Africa,
-        NorthAmerica,
-        SouthAmerica,
+        NA,
+        SA,
         Antartic,
         Asia,
         Europe,
