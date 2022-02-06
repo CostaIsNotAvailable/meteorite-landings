@@ -38,6 +38,10 @@ export class InterfaceComponent implements OnInit {
   minDate = 1400;
   maxDate = 2013;
 
+  isSorted = false;
+  orderField : 'Date' | 'Mass' = 'Mass';
+  orderType : 'Ascending' | 'Descending' = 'Ascending';
+
   actionSnackBar = 'Close';
   optionsSnackBar!: MatSnackBarConfig;
 
@@ -93,6 +97,20 @@ export class InterfaceComponent implements OnInit {
 
   setMinimumDate(value: number) {
     this.minDate = value;
+  }
+  setOrderField(){
+    if(this.orderField === 'Mass'){
+      this.orderField = 'Date';
+    } else {
+      this.orderField = 'Mass';
+    }
+  }
+  setOrderType(){
+    if(this.orderType === 'Ascending'){
+      this.orderType = 'Descending';
+    } else {
+      this.orderType = 'Ascending';
+    }
   }
 
   allComplete: boolean = false;
@@ -150,6 +168,9 @@ export class InterfaceComponent implements OnInit {
       maxMass: this.maxMass,
       minDate: this.minDate,
       maxDate: this.maxDate,
+      isSorted: this.isSorted,
+      sortedBy: this.orderField, 
+      order: this.orderType,
       file: this.file,
     };
     if (this.minMass < this.maxMass) {
@@ -177,5 +198,13 @@ export class InterfaceComponent implements OnInit {
     this.launch = true;
     this.cancelAnimation = false;
     this.cancelEvent.emit(true);
+  }
+  
+  changeIsSortedValue(){
+    if(this.isSorted){
+      this.isSorted = false;
+    } else {
+      this.isSorted = true;
+    }
   }
 }
