@@ -12,7 +12,7 @@ namespace MeteoriteLandings.Models
 
         public string RecClass { get; set; }
 
-        public string Mass { get; set; }
+        public int Mass { get; set; }
 
         public string Fall { get; set; }
 

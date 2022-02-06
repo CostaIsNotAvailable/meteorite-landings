@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using MeteoriteLandings.Models;
+using MeteoriteLandings.Enums;
 
 
 namespace MeteoriteLandings.Controllers
@@ -26,7 +27,7 @@ namespace MeteoriteLandings.Controllers
         }
 
         [HttpPost]
-        public ActionResult<IEnumerable<MeteoriteLanding>> Process()
+        public ActionResult<IEnumerable<MeteoriteLanding>> Process([FromQuery] string continents, [FromQuery] int minMass, [FromQuery] int maxMass, [FromQuery] int minDate, [FromQuery] int maxDate, [FromQuery] bool isSorted, [FromQuery] SortBy sortedBy, [FromQuery] Order order)
         {
             try
             {
@@ -48,16 +49,40 @@ namespace MeteoriteLandings.Controllers
                             IDeserializer deserializer = new DeserializerBuilder()
                                 .IgnoreUnmatchedProperties()
                                 .Build();
-                            List<YamlMeteoriteLanding>  yamlMeteoriteLandings = deserializer.Deserialize<List<YamlMeteoriteLanding>>(fileContent);
+                            List<YamlMeteoriteLanding> yamlMeteoriteLandings = deserializer.Deserialize<List<YamlMeteoriteLanding>>(fileContent);
                             fileMeteoriteLandings = yamlMeteoriteLandings
                                 .Select(yamlMeteoriteLanding => MapYamlMeteoriteLanding(yamlMeteoriteLanding))
                                 .ToList();
                             break;
                         default:
-                            throw new ArgumentException("Invalid format file");
+                            throw new ArgumentException("Invalid file format");
                     }
 
                     meteoriteLandings.AddRange(fileMeteoriteLandings);
+                }
+
+                Continent[] serializedContinents = JsonConvert.DeserializeObject<Continent[]>(continents);
+
+                meteoriteLandings = meteoriteLandings
+                    .Where(m => m.Mass >= minMass && m.Mass <= maxMass)
+                    .Where(m => m.Year.Year >= minDate && m.Year.Year <= maxDate)
+                    .Where(m => isInContinent(serializedContinents))
+                    .ToList();
+
+                if (isSorted)
+                {
+                    meteoriteLandings = meteoriteLandings.OrderBy(m =>
+                    {
+                        switch (sortedBy)
+                        {
+                            case (SortBy.Date):
+                                return m.Year.Year;
+                            case (SortBy.Mass):
+                                return m.Mass;
+                            default:
+                                return m.Id;
+                        }
+                    }).ToList();
                 }
 
                 return Ok(meteoriteLandings);
@@ -82,6 +107,11 @@ namespace MeteoriteLandings.Controllers
                 RecLat = yamlMeteoriteLanding.reclat,
                 RecLong = yamlMeteoriteLanding.reclong
             };
+        }
+
+        private bool isInContinent(Continent[] continents)
+        {
+            return true;
         }
     }
 }
