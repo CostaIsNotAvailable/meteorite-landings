@@ -12,6 +12,7 @@ using YamlDotNet.Serialization.NamingConventions;
 using MeteoriteLandings.Models;
 using MeteoriteLandings.Enums;
 using MeteoriteLandings.Services;
+using ContinentName = MeteoriteLandings.Enums.Continent;
 
 namespace MeteoriteLandings.Controllers
 {
@@ -27,7 +28,15 @@ namespace MeteoriteLandings.Controllers
         }
 
         [HttpPost]
-        public ActionResult<IEnumerable<MeteoriteLanding>> Process([FromQuery] string continents, [FromQuery] int minMass, [FromQuery] int maxMass, [FromQuery] int minDate, [FromQuery] int maxDate, [FromQuery] bool isSorted, [FromQuery] SortBy sortedBy, [FromQuery] Order order)
+        public ActionResult<IEnumerable<MeteoriteLanding>> Process(
+            [FromQuery] string continents, 
+            [FromQuery] int minMass, 
+            [FromQuery] int maxMass, 
+            [FromQuery] int minDate, 
+            [FromQuery] int maxDate, 
+            [FromQuery] bool isSorted, 
+            [FromQuery] SortBy sortedBy, 
+            [FromQuery] Order order)
         {
             try
             {
@@ -61,18 +70,17 @@ namespace MeteoriteLandings.Controllers
                     meteoriteLandings.AddRange(fileMeteoriteLandings);
                 }
 
-                Continent[] serializedContinents = JsonConvert.DeserializeObject<Continent[]>(continents);
+                ContinentName[] serializedContinents = JsonConvert.DeserializeObject<ContinentName[]>(continents);
 
                 meteoriteLandings = meteoriteLandings
                     .Where(m => m.Mass >= minMass && m.Mass <= maxMass)
                     .Where(m => m.Year.Year >= minDate && m.Year.Year <= maxDate)
-                    .Where(m => isInContinent(serializedContinents))
+                    .Where(m => isInContinent(m.RecLat, m.RecLong, serializedContinents))
                     .ToList();
 
                 if (isSorted)
                 {
                     meteoriteLandings = meteoriteLandings
-                        .AsQueryable()
                         .OrderByWithDirection(m => Sort(m, sortedBy), order)
                         .ToList();
                 }
@@ -114,9 +122,19 @@ namespace MeteoriteLandings.Controllers
             };
         }
 
-        private bool isInContinent(Continent[] continents)
+        private bool isInContinent(float latitude, float longitude, ContinentName[] continents)
         {
+            // TODO fix function
             return true;
+
+            ContinentName? continentName = Utils.GetContinent(latitude, longitude);
+
+            if (continentName == null)
+            {
+                return false;
+            }
+
+            return continents.Contains((ContinentName)continentName);
         }
     }
 }

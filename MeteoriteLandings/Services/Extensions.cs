@@ -9,10 +9,10 @@ namespace MeteoriteLandings.Services
 {
     public static class Extensions
     {
-        public static IOrderedQueryable<TSource> OrderByWithDirection<TSource, TKey>(this IQueryable<TSource> source, Expression<Func<TSource, TKey>> keySelector, Order order)
+        public static IOrderedQueryable<TSource> OrderByWithDirection<TSource, TKey>(this IEnumerable<TSource> source, Expression<Func<TSource, TKey>> keySelector, Order order)
         {
-            return order == Order.Descending ? source.OrderByDescending(keySelector)
-                              : source.OrderBy(keySelector);
+            return order == Order.Descending ? source.AsQueryable().OrderByDescending(keySelector)
+                              : source.AsQueryable().OrderBy(keySelector);
         }
     }
 }
