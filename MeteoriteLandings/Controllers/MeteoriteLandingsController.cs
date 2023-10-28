@@ -122,19 +122,10 @@ namespace MeteoriteLandings.Controllers
             };
         }
 
+        // To be implemented
         private bool isInContinent(float latitude, float longitude, ContinentName[] continents)
         {
             return true;
-
-            // TODO Fix function
-            //ContinentName? continentName = Utils.GetContinent(latitude, longitude);
-
-            //if (continentName == null)
-            //{
-                //return false;
-            //}
-
-            //return continents.Contains((ContinentName)continentName);
         }
     }
 }
