@@ -1,0 +1,96 @@
+<body>
+  <div class="file">
+    <div class="filePicker">
+      <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+      <input hidden (change)="setFileInput($event)" #fileInput type="file" id="file">
+    </div>
+    <div class="fileName" *ngIf="fileName">
+      <a class="txtFileName">File name : {{fileName}}</a>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="sliders">
+    <div class="minMassTxt">
+      <a class="txtMinMass">Min Mass (g) :</a>
+      <div>
+        <a class="varMinMass">{{minMass}}</a>
+      </div>
+    </div>
+    <div class="minMassSlider">
+      <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1000" step="10000" min="0" max="100000000"
+        aria-label="units" color="primary" (input)="setMinimumMass($event)">
+      </mat-slider>
+    </div>
+    <div class="maxMassTxt">
+      <a class="txtMaxMass">Max Mass (g) :</a>
+      <div>
+        <a class="varMaxMass">{{maxMass}}</a>
+      </div>
+    </div>
+    <div class="maxMassSlider">
+      <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1000" step="10000" min="0" max="100000000"
+        value="100000000" aria-label="units" color="primary" (input)="setMaximumMass($event)">
+      </mat-slider>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="datePicker">
+    <div class="minDate">
+      <a class="txtMinYear">Min Year : </a>
+      <input type="number" step="10" matInput value="1400" min="1400" max="2012" [(ngModel)]="minDate"
+        (change)="setMinimumDate(minDate)">
+    </div>
+    <div class="maxDate">
+      <a class="txtMaxYear">Max Year : </a>
+      <input type="number" step="10" matInput value="2013" max="2013" min="1401" [(ngModel)]="maxDate"
+        (change)="setMaximumDate(maxDate)">
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="checkbox">
+    <section>
+      <span class="globalCheckbox">
+        <mat-checkbox class="mainCheckbox" [checked]="allComplete" [color]="task.color" [indeterminate]="someComplete()"
+          (change)="setAll($event.checked)">
+          <a class="txtTaskName">{{task.name}}</a>
+        </mat-checkbox>
+      </span>
+      <span class="eachCheckbox">
+        <ul>
+          <li *ngFor="let subtask of task.subtasks">
+            <mat-checkbox [checked]="subtask.completed" (change)="subtask.completed = $event.checked"
+              [color]="subtask.color" (ngModelChange)="updateAllComplete()">
+              <a class="txtSubTaskName">{{subtask.name}}</a>
+            </mat-checkbox>
+          </li>
+        </ul>
+      </span>
+    </section>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="orderBy">
+    <div class="isOrder">
+      <button mat-raised-button (click)="changeIsSortedValue()">Order Data</button>
+    </div>
+    <div class="orderField">
+      <mat-slide-toggle color="primary" (change)="setOrderField()" [disabled]="!isSorted ? 'disabled': null">
+        <a class="orderFieldTxt">{{orderField}}</a>
+      </mat-slide-toggle>
+    </div>
+    <div class="orderType">
+      <mat-slide-toggle color="primary" (change)="setOrderType()" [disabled]="!isSorted ? 'disabled': null">
+        <a class="orderTypeTxt">{{orderType}}</a>
+      </mat-slide-toggle>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="buttons">
+    <div class="launch">
+      <button mat-raised-button (click)="emitData()" [disabled]="!launch ? 'disabled': null">Launch</button>
+    </div>
+    <div class="stopAnimation">
+      <button mat-raised-button (click)="stopAnimation()" [disabled]="!cancelAnimation ? 'disabled': null">Stop
+        animation</button>
+    </div>
+  </div>
+</body>

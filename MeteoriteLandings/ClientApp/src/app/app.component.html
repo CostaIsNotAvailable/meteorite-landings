@@ -1,6 +1,8 @@
 <body>
-  <app-nav-menu></app-nav-menu>
   <div class="container">
-    <router-outlet></router-outlet>
+    <div fxFill="row" fxLayoutAlign="center center">
+      <app-interface (sendData)="sendToBack($event)" (cancelEvent)="cancelEvent($event)" style="position: absolute; left: 5%;"></app-interface>
+      <app-globe [displayData]="displayData" [isCanceled]="isCanceled"></app-globe>
+    </div>
   </div>
 </body>
